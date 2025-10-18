@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neural Edge Demo</title>
+</head>
+<body>
+<h1>🚀 Neural Edge MVP Demo</h1>
+<div id="static-content"></div>
+<div id="dynamic-content"></div>
+
+<script type="module">
+    import NeuralEdge from '/sdk/neuralEdge.js';
+
+    NeuralEdge.getStatic('index.html').then(html => {
+        document.getElementById('static-content').innerHTML =
+            `<h2>Static Content Loaded from Edge</h2>${html}`;
+    });
+
+    NeuralEdge.getDynamic('/api/user-profile', { id: 123 }).then(data => {
+        document.getElementById('dynamic-content').innerHTML = `
+        <h2>Dynamic Content Loaded from Edge Function</h2>
+        <pre>${JSON.stringify(data, null, 2)}</pre>
+      `;
+    });
+</script>
+</body>
+</html>

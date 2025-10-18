@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Neural Edge Demo</title>
+</head>
+<body>
+<h1>🚀 Neural Edge MVP Demo</h1>
+<div id="static-content"></div>
+<div id="dynamic-content"></div>
+
+<script type="module">
+    // ✅ Correct path since sdk is in /public/sdk/
+    import NeuralEdge from '/sdk/neuralEdge.js';
+
+    // ✅ Load static content from Edge Server (port 8081)
+    NeuralEdge.getStatic('index.html')
+        .then(html => {
+            document.getElementById('static-content').innerHTML =
+                `<h2>Static Content Loaded from Edge</h2>${html}`;
+        })
+        .catch(err => console.error('Static content error:', err));
+
+    // ✅ Load dynamic content from Edge Function (port 9000)
+    NeuralEdge.getDynamic('/api/user-profile', { id: 123 })
+        .then(data => {
+            document.getElementById('dynamic-content').innerHTML = `
+                    <h2>Dynamic Content Loaded from Edge Function</h2>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+        })
+        .catch(err => console.error('Dynamic content error:', err));
+</script>
+</body>
+</html>

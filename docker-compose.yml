@@ -1,0 +1,17 @@
+
+version: '3'
+services:
+  origin:
+    build: ./origin-server
+    ports:
+      - "3000:3000"
+  edge1:
+    build: ./edge-server
+    ports:
+      - "8081:8081"
+    environment:
+      ORIGIN_URL: http://origin:3000
+  edge-function:
+    build: ./edge-functions
+    ports:
+      - "9000:9000"
